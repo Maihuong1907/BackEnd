@@ -33,10 +33,10 @@ const start = async () => {
   try {
     createFolder(path.resolve(envConfig.UPLOAD_FOLDER))
     autoRemoveRefreshTokenJob()
-    const whitelist = [envConfig.CLIENT_URL] // thay vì '*'
+    const whitelist = ['*']
     fastify.register(cors, {
-      origin: whitelist,
-      credentials: true
+      origin: whitelist, // Cho phép tất cả các domain gọi API
+      credentials: true // Cho phép trình duyệt gửi cookie đến server
     })
 
     fastify.register(fastifyAuth, {
@@ -52,9 +52,7 @@ const start = async () => {
     fastify.register(errorHandlerPlugin)
     fastify.register(fastifySocketIO, {
       cors: {
-        origin: [envConfig.CLIENT_URL], // nên là mảng
-        methods: ['GET', 'POST'],
-        credentials: true
+        origin: envConfig.CLIENT_URL
       }
     })
     fastify.register(socketPlugin)
