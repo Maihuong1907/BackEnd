@@ -47,12 +47,15 @@ const start = async () => {
         policy: 'cross-origin'
       }
     })
+
     fastify.register(fastifyCookie)
     fastify.register(validatorCompilerPlugin)
     fastify.register(errorHandlerPlugin)
     fastify.register(fastifySocketIO, {
       cors: {
-        origin: envConfig.CLIENT_URL
+        origin: 'https://lauthairestaurant.vercel.app',
+        methods: ['GET', 'POST'],
+        credentials: true
       }
     })
     fastify.register(socketPlugin)
